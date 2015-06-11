@@ -1,20 +1,13 @@
 from src.config.config import *
 
 commands = {
-	'!test': {
+	'!testkpm': {
 		'limit': 30,
-		'return': 'This is a test!'
+		'return': 'Kappa'
 	},
-
-	'!randomemote': {
-		'limit': 180,
+	'!kpm': {
+		'limit': 30,
 		'argc': 0,
-		'return': 'command'
-	},
-
-	'!wow': {
-		'limit': 30,
-		'argc': 3,
 		'return': 'command'
 	}
 }

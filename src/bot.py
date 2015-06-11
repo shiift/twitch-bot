@@ -7,6 +7,7 @@ Developed by Aidan Thomson <aidraj0@gmail.com>
 import lib.irc as irc_
 from lib.functions_general import *
 import lib.functions_commands as commands
+from threading import *
 
 class Roboraj:
 
@@ -15,8 +16,7 @@ class Roboraj:
 		self.irc = irc_.irc(config)
 		self.socket = self.irc.get_irc_socket_object()
 
-
-	def run(self):
+	def run(self, arr_data):
 		irc = self.irc
 		sock = self.socket
 		config = self.config
@@ -41,6 +41,11 @@ class Roboraj:
 				message = message_dict['message']
 				username = message_dict['username']
 
+				if "Kappa" in message:
+					arr_data['arr_lock'].acquire()
+					arr_data['kappa_arr'][arr_data['arr_loc']] += message.count("Kappa")
+					arr_data['arr_lock'].release()
+
 				ppi(channel, message, username)
 
 				# check if message is a command with no arguments
@@ -64,12 +69,15 @@ class Roboraj:
 									command, username), 
 									channel
 								)
-								
-								result = commands.pass_to_function(command, args)
+								result = 0
+								if command == "!kpm":
+									result = commands.pass_to_function(command, arr_data)
+								else:
+									result = commands.pass_to_function(command, args)
 								commands.update_last_used(command, channel)
 
 								if result:
-									resp = '(%s) > %s' % (username, result)
+									resp = '%s' % (result)
 									pbot(resp, channel)
 									irc.send_message(channel, resp)
 
@@ -86,7 +94,7 @@ class Roboraj:
 							)
 							commands.update_last_used(command, channel)
 
-							resp = '(%s) > %s' % (username, commands.get_return(command))
+							resp = '%s' % (commands.get_return(command))
 							commands.update_last_used(command, channel)
 
 							pbot(resp, channel)
