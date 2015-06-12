@@ -9,14 +9,13 @@ config = {
         'oauth_password': 'oauth:yjtjj80dna78urwbwh5hqp0j8t0aen', # get this from http://twitchapps.com/tmi/
 	
 	# channel to join
-	'channels': ['#hotform'],
+	'channels': ['#strifecro'],
 
 	'cron': {
-		'#channel_one': {
+		'#strifecro': {
 			'run_cron': False, 	# set this to false if you want don't want to run the cronjob but you want to preserve the messages etc
 			'run_time': 30, 		# time in seconds
 			'cron_messages': [
-				'This is channel_one cron message one.',
 				'This is channel_one cron message two.'
 			]
 		}

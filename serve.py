@@ -20,7 +20,7 @@ class timer(Thread):
 			time.sleep(5)
 			
 			arr_data['arr_lock'].acquire()
-			if(arr_data['arr_loc'] < 60):
+			if(arr_data['arr_loc'] < 59):
 				arr_data['arr_loc'] += 1
 			else:
 				arr_data['arr_loc'] = 0
